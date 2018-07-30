@@ -14,7 +14,8 @@ import { pour } from '../lib/pour'
 
 import ReactSVGComponents from '../renderers/ReactSVGComponents'
 
-import sylmap from '../sylmaps/sylmap'
+// import sylmap from '../sylmaps/sylmap'
+import sylmap from '../sylmaps/sylmap-c.json'
 
 import { InputBox } from '../components/UI'
 

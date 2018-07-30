@@ -4,9 +4,6 @@ import { reduce } from 'lodash'
 const randInt = max => Math.floor(Math.random() * Math.floor(max))
 
 
-// const avg = arr => reduce(arr, (a,b) => a + b, 0) / size(arr)
-
-
 const keys = obj => Object.keys(obj)
 
 
@@ -14,9 +11,6 @@ const entries = obj => Object.entries(obj)
 
 
 const values = obj => Object.values(obj)
-
-
-const includes = (arr, val) => arr.includes(val)
 
 
 const compose = (...fs) => fs.reduceRight((pF, nF) => (...args) => nF(pF(...args)), v => v)
@@ -126,6 +120,7 @@ const deepClone = any => JSON.parse(JSON.stringify(any))
 
 
 
+
 export {
   randInt,
   comparatorWithKey,
@@ -135,7 +130,6 @@ export {
   values,
   entries,
   keys,
-  includes,
 
   quickHash,
   // mergeUpdates,

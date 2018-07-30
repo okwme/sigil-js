@@ -1,4 +1,4 @@
-import { flatten, size, map, isUndefined } from 'lodash'
+import { flatten, size, map, isUndefined, filter, includes } from 'lodash'
 
 
 const seq = num => Array.from(Array(num), (nada, i) => i)
@@ -89,6 +89,8 @@ const rotateArray = (arr, n) => {
   return arr.slice(l - n).concat(arr.slice(0, l - n))
 }
 
+const dupes = arr => filter(arr, (val, i, iteratee) => includes(iteratee, val, i + 1))
+
 
 export {
   seq,
@@ -107,5 +109,6 @@ export {
   isEmpty,
   len,
   sq,
-  lid
+  lid,
+  dupes
 }

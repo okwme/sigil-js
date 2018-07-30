@@ -32,7 +32,7 @@ const pour = ({ patp, sylmap, renderer, size, colorway, symbols }) => {
   symbols = !isUndefined(symbols)
     ? symbols
     : lookup(patp, sylmap)
-    
+
   // The size of each svg as drawn in Figma
   const UNIT = 128
 
@@ -70,11 +70,34 @@ const pour = ({ patp, sylmap, renderer, size, colorway, symbols }) => {
 const lookup = (patp, sylmap) => {
   // renderer and @P are not optional
   if (isUndefined(patp)) throw Error('Missing patp argument to pour()')
+  if (isUndefined(sylmap)) {
+    return map(patp, syllable => DEFAULT_SYMBOL)
+  } else {
+    return map(patp, syllable => {
+      const symbol = get(sylmap, ['mapping', syllable], DEFAULT_SYMBOL)
+      return decompress(symbol, sylmap.refs)
+    })
+  }
 
-  return isUndefined(sylmap)
-  ? map(patp, syllable => DEFAULT_SYMBOL)
-  : map(patp, syllable => get(sylmap, syllable, DEFAULT_SYMBOL))
 }
+
+const decompress = (child, refs) => {
+
+  if (child.tag === 'path') {
+    const path = refs[child.attr.d]
+    return {
+      ...child,
+      attr: {...child.attr, d: path },
+      children: map(get(child, 'children', []), child => decompress(child, refs)),
+    }
+  } else {
+    return {
+      ...child,
+      children: map(get(child, 'children', []), child => decompress(child, refs)),
+    }
+  }
+}
+
 
 
 // transform symbols into position on grid
@@ -152,13 +175,13 @@ const dye = (model, patp, colorway) => {
 
 const applyStyle = {
   // return background opacity value for foreground and bg
-  fillOpacity: p => {
-    switch(p) {
-      case 'FG': return 1
-      case 'BG': return 1
-      default: return 0
-    }
-  },
+  // fillOpacity: p => {
+  //   switch(p) {
+  //     case 'FG': return 1
+  //     case 'BG': return 1
+  //     default: return 0
+  //   }
+  // },
   // return colorway index for foreground and bg
   color: (p, colorway) => {
     switch(p) {
@@ -176,7 +199,7 @@ const returnStyleAttrs = (style, colorway) => {
   const { fill } = style
   return {
     fill: applyStyle.color(fill, colorway),
-    fillOpacity: applyStyle.fillOpacity(fill),
+    // fillOpacity: applyStyle.fillOpacity(fill),
   }
 }
 
