@@ -1,4 +1,4 @@
-import { get, set, reduce } from 'lodash'
+import { reduce } from 'lodash'
 
 
 const randInt = max => Math.floor(Math.random() * Math.floor(max))
