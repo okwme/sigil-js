@@ -41,6 +41,7 @@ const _pour = ({ patp, renderer, sylgraph, size, colorway, symbols, margin, igno
     tag: 'svg',
     meta: {},
     attr: { 
+      preserveAspectRatio: "xMidYMid meet",
       viewBox: `0 0 ${size} ${size}`,
       width: size, 
       height: size 
