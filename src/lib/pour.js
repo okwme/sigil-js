@@ -40,7 +40,11 @@ const _pour = ({ patp, renderer, sylgraph, size, colorway, symbols, margin, igno
   const withColor = dyes({
     tag: 'svg',
     meta: {},
-    attr: { width: size, height: size },
+    attr: { 
+      viewBox: `0 0 ${size} ${size}`,
+      width: size, 
+      height: size 
+    },
     children: [ baseRectangle(size, ignoreColorway), ...knolled ],
   }, patp, colorway);
 
